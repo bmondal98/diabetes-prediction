@@ -10,3 +10,8 @@ eda and model creation for diabetes prediction using kaggle dataset
 
 1. [Github Account](https://github.com)
 2. [Google Colab Account](https://colab.research.google.com/)
+
+
+## Steps to run this project
+
+1. Run "pip install -r requirements.txt" command to install the required packages
