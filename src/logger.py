@@ -12,7 +12,7 @@ from constants import projectConstant
 
 LOG_FOLDER = f"{projectConstant.PROJECT_NAME}_LOGS"
 LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
-logs_path=os.path.join(os.getcwd(),LOG_FOLDER,LOG_FILE)
+logs_path=os.path.join(os.getcwd(),LOG_FOLDER)
 os.makedirs(logs_path, exist_ok=True)
 
 
