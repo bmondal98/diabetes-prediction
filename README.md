@@ -14,4 +14,8 @@ eda and model creation for diabetes prediction using kaggle dataset
 
 ## Steps to run this project
 
-1. Run "pip install -r requirements.txt" command to install the required packages
+1. Run the below command to install requirement.txt packages : 
+    a. Use "pip install -r requirements.txt" if whole environment is running with pip and conda not installed
+                                 or
+    b. use "conda install --file requirements.txt" if anaconda is already installed in the system
+
