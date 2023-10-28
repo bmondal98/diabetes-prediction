@@ -6,7 +6,7 @@ import logging
 import os
 import sys
 from datetime import datetime
-from constants import projectConstant
+from src.constants import projectConstant
 
 
 
