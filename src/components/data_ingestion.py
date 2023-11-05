@@ -11,10 +11,8 @@ import sys
 # sys.path.append(parent_dir)
 # from exception import CustomException
 # from logger import logging
-# from components.data_transformation import (
-#     DataTransformation,
-#     DataTransformationConfig
-# )
+# from components.data_transformation import DataTransformation, DataTransformationConfig
+# from components.model_trainer import ModelTrainer, ModelTrainerConfig
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -26,13 +24,14 @@ from src.components.data_transformation import (
     DataTransformation,
     DataTransformationConfig,
 )
+from src.components.model_trainer import ModelTrainer, ModelTrainerConfig
 
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = os.path.join("artifacts", "train.csv")
-    test_data_path: str = os.path.join("artifacts", "test.csv")
-    raw_data_path: str = os.path.join("artifacts", "data.csv")
+    train_data_path: str = os.path.join("../../artifacts", "train.csv")
+    test_data_path: str = os.path.join("../../artifacts", "test.csv")
+    raw_data_path: str = os.path.join("../../artifacts", "data.csv")
 
 
 class DataIngestion:
@@ -43,7 +42,7 @@ class DataIngestion:
         logging.info("entered the data ingestion method or component")
         try:
             # reading data from source like mongodb/json/mysql/csv
-            df = pd.read_csv("notebook\data\diabetes.csv")
+            df = pd.read_csv("..\..\\notebook\data\diabetes.csv")
             logging.info("read the dataset as dataframe")
 
             os.makedirs(
@@ -73,9 +72,14 @@ class DataIngestion:
             raise CustomException(e, sys)
 
 
-# if __name__ == "__main__":
-#     obj = DataIngestion()
-#     train_data, test_data = obj.initiate_data_ingestion()
+if __name__ == "__main__":
+    obj = DataIngestion()
+    train_data, test_data = obj.initiate_data_ingestion()
 
-#     data_transformation = DataTransformation()
-#     data_transformation.initiate_data_transformer(train_data, test_data)
+    data_transformation = DataTransformation()
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformer(
+        train_data, test_data
+    )
+
+    model_training= ModelTrainer()
+    model_training.initiate_model_trainer(train_arr,test_arr)

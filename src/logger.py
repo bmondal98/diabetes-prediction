@@ -6,14 +6,15 @@ import logging
 import os
 import sys
 from datetime import datetime
-from src.constants import projectConstant
+from constants import projectConstant
+#from src.constants import projectConstant
 
 
 
 LOG_FOLDER = f"{projectConstant.PROJECT_NAME}_LOGS"
 LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M')}.log"
 #f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
-logs_path=os.path.join(os.getcwd(),LOG_FOLDER)
+logs_path=os.path.join("../",LOG_FOLDER)
 
 if not os.path.isfile(logs_path):
     os.makedirs(logs_path, exist_ok=True)

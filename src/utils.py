@@ -7,11 +7,15 @@ import sys
 # sys.path.append(parent_dir)
 import numpy as np
 import pandas as pd
-from src.exception import CustomException
 import dill
+
+from exception import CustomException
+# from src.exception import CustomException
+
 
 def save_object(file_path, obj):
     try:
+        print("filePath>>>", file_path)
         dir_path=os.path.dirname(file_path)
 
         os.makedirs(dir_path, exist_ok=True)
@@ -20,4 +24,35 @@ def save_object(file_path, obj):
             dill.dump(obj, file_obj)
 
     except Exception as e:
-        CustomException(e,sys)
+        raise CustomException(e,sys)
+
+def evaluate_model(x_train,y_train, x_test, y_test, models,scoreMatrice):
+    try:
+        report  ={}
+        model_name=[]
+        model_train_performance=[]
+        model_test_performance=[]
+
+        for i in range(len(list(models))):
+            modelName=list(models.keys())[i]
+            model_name.append(modelName)
+            
+            model = list(models.values())[i]
+            model.fit(x_train,y_train)
+            
+            y_train_pred = model.predict(x_train)
+            y_test_pred = model.predict(x_test)
+            
+            train_accuracy=scoreMatrice.accuracy_score(y_train,y_train_pred)
+            test_accuracy = scoreMatrice.accuracy_score(y_test,y_test_pred)
+
+            model_train_performance.append(train_accuracy)
+            model_test_performance.append(test_accuracy)
+
+        report={'modelNames':model_name, 'trainingPerformance':model_train_performance,'testingPerformance':model_test_performance}
+        print("report>>>", report)
+        return report
+
+        
+    except Exception as e:
+        raise CustomException(e,sys)
