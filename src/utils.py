@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import dill
 
-from exception import CustomException
+from src.exception import CustomException
 # from src.exception import CustomException
 
 
@@ -26,7 +26,7 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e,sys)
 
-def evaluate_model(x_train,y_train, x_test, y_test, models,scoreMatrice):
+def evaluate_model(x_train,y_train, x_test, y_test, models,scoreMatrice,GridSearchCV,hyperParams):
     try:
         report  ={}
         model_name=[]
@@ -36,8 +36,16 @@ def evaluate_model(x_train,y_train, x_test, y_test, models,scoreMatrice):
         for i in range(len(list(models))):
             modelName=list(models.keys())[i]
             model_name.append(modelName)
+
             
             model = list(models.values())[i]
+            
+            tuningParams= list(hyperParams.values())[i]
+            gs=GridSearchCV(model,tuningParams, cv=5)
+            gs.fit(x_train,y_train)
+
+            print("modelParams>>>",gs.best_params_)
+            model.set_params(**gs.best_params_)
             model.fit(x_train,y_train)
             
             y_train_pred = model.predict(x_train)
